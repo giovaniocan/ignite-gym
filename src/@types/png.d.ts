@@ -1,0 +1,1 @@
+declare module "*.png" // isso é para falar que todo png esta certo, e pode ficar tranquilo
