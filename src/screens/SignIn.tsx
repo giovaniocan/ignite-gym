@@ -30,20 +30,26 @@ export function SignIn(){
                 <Heading color="gray.100" fontSize="xl" mb="6" fontFamily="heading">
                     Access your account
                 </Heading>
+
+                <Input
+                    placeholder="E-mail"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+               />
+
+                <Input
+                    placeholder="Password"
+                    secureTextEntry
+                 />
+
+                <Button variant={"solid"} title="Sign In" />
             </Center>
 
-            <Input
-                placeholder="E-mail"
-                keyboardType="email-address"
-                autoCapitalize="none"
-                autoCorrect={false}
-            />
-            <Input
-                placeholder="Password"
-                secureTextEntry
-            />
+            <Button title="Create account" variant={"outline"} />
+           
 
-            <Button title="Sign In" />
+           
             
 
         </VStack>
