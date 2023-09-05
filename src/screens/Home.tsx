@@ -1,8 +1,12 @@
 
+import { useState } from 'react';
+
+import { FlatList, HStack, Heading, Text, VStack, Icon } from 'native-base';
+
+
+import { ExerciseCard } from '@components/ExerciseCard';
 import { Group } from '@components/Group';
 import { HomeHeader } from '@components/HomeHeader';
-import { FlatList, HStack, Heading, Text, VStack } from 'native-base';
-import { useState } from 'react';
 
 export function Home() {
   const [groups, setGroups] = useState(['back', 'bicips', 'tricipes', 'shoulder'])
@@ -47,6 +51,9 @@ export function Home() {
                     4
                 </Text>
             </HStack>
+
+            <ExerciseCard />
+            <ExerciseCard />
         </VStack>
     </VStack>
   )
