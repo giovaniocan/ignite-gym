@@ -47,7 +47,7 @@ export function AppRoutes(){
                     
                 }
             }} /*the second style is to takes the name the page off */>
-            <Screen
+            {/* <Screen
                 name="home"
                 component={Home}
                 options={{
@@ -56,7 +56,7 @@ export function AppRoutes(){
                     )
                 
                 }} 
-            />
+            /> */}
             <Screen
                 name="history"
                 component={History}
