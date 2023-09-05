@@ -46,6 +46,8 @@ export function History(){
                         Let's workout today?
                     </Text>
                 )}
+
+                showsVerticalScrollIndicator={false}
             />
 
            
