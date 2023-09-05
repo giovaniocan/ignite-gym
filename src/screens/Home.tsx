@@ -11,7 +11,7 @@ import { HomeHeader } from '@components/HomeHeader';
 export function Home() {
   const [groups, setGroups] = useState(['back', 'bicips', 'tricipes', 'shoulder'])
 
-  const [groupSelected, setGroupSelected] = useState('costa')
+  const [groupSelected, setGroupSelected] = useState('back')
 
   const [exercises, setExercises] = useState(['Puxada frontal', 'Remada curvada', 'Cavalinho', 'Levantamento Terra'])
 
@@ -25,7 +25,7 @@ export function Home() {
             renderItem={({item}) => (
                 <Group 
                     name={item}
-                    isActive={groupSelected === item}
+                    isActive={groupSelected.toLocaleUpperCase() === item.toLocaleUpperCase()} // to check with no considering if it's in upper or lowercase, to prevent some errors
                     onPress={() => setGroupSelected(item)}
                 />
             )}
@@ -37,8 +37,8 @@ export function Home() {
             maxH={10}
         />
 
-        <VStack flex={1} px={8} mb={5}>
-            <HStack justifyContent="space-between">
+        <VStack flex={1} px={8} >
+            <HStack justifyContent="space-between" mb={5}>
                 <Heading 
                     color="gray.200"
                     fontSize="md"
