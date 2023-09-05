@@ -13,6 +13,8 @@ export function Home() {
 
   const [groupSelected, setGroupSelected] = useState('costa')
 
+  const [exercises, setExercises] = useState(['Puxada frontal', 'Remada curvada', 'Cavalinho', 'Levantamento Terra'])
+
   return (
     <VStack flex={1}>
         <HomeHeader />
@@ -48,12 +50,23 @@ export function Home() {
                     color="gray.200"
                     fontSize="sm"
                 >
-                    4
+                    {exercises.length}
                 </Text>
             </HStack>
+            
+            <FlatList
+                data={exercises}
+                keyExtractor={item => item}
+                renderItem={({item}) => {
+                    return (
+                        <ExerciseCard />
+                    )
+                
+                }}
+                showsVerticalScrollIndicator={false}
+                _contentContainerStyle={{paddingBottom: 20, }}
+            />
 
-            <ExerciseCard />
-            <ExerciseCard />
         </VStack>
     </VStack>
   )
