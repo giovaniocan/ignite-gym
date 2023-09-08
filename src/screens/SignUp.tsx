@@ -2,6 +2,9 @@ import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import {useForm, Controller} from 'react-hook-form'
 
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
 import BackgroundImg from '@assets/background.png'
 import LogoSvg from '@assets/logo.svg'
 
@@ -15,8 +18,18 @@ type formDataProps = {
     password_confirmation: string;
 }
 
+const signUPSchema = yup.object({
+    name: yup.string().required('Inform your name'),
+    email: yup.string().required('Inform your email').email('Invalid email'),
+    password: yup.string().required('Inform your password').min(6, 'Password must be at least 6 characters'),
+    password_confirmation: yup.string().required('Confirm your password').oneOf([yup.ref('password')], 'Both passwords has to be equals') // this last confirmation is comparing both passwords
+})
+
 export function SignUp(){
-    const {control, handleSubmit} = useForm<formDataProps>() // typing and create hook-form
+    const {control, handleSubmit, formState:{errors}} = useForm<formDataProps>({
+        resolver: yupResolver(signUPSchema)
+    
+    }) // typing and create hook-form
 
     function handleSubmiteForm(data: formDataProps){
         console.log(data)
@@ -62,6 +75,7 @@ export function SignUp(){
                                 autoCorrect={false}
                                 onChangeText={onChange}
                                 value={value}
+                                errorMessage={errors.name?.message}
                             />
                         )}
                     /> 
@@ -77,6 +91,7 @@ export function SignUp(){
                                 autoCorrect={false}
                                 onChangeText={onChange}
                                 value={value}
+                                errorMessage={errors.email?.message}
                                 
                             />
                         )}
@@ -91,6 +106,7 @@ export function SignUp(){
                                 secureTextEntry
                                 onChangeText={onChange}
                                 value={value}
+                                errorMessage={errors.password?.message}
                             />
                         )}
                     />
@@ -106,6 +122,7 @@ export function SignUp(){
                                 value={value}
                                 onSubmitEditing={handleSubmit(handleSubmiteForm)} // para quando a pessoa apertar enter no teclado ele der o submite tambem
                                 returnKeyType="send" // to transformar o enter em send in the input( keyboard)
+                                errorMessage={errors.password_confirmation?.message}
                             />
                         )}
                     />
