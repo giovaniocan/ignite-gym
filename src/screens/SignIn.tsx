@@ -44,7 +44,7 @@ export function SignIn(){
                         keyboardType="email-address"
                         autoCapitalize="none"
                         autoCorrect={false}
-                />
+                    />
 
                     <Input
                         placeholder="Password"

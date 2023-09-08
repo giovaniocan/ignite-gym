@@ -1,15 +1,28 @@
 import { Center, Heading, Image, ScrollView, Text, VStack } from "native-base";
-
-import LogoSvg from '@assets/logo.svg'
-
-
+import { useNavigation } from "@react-navigation/native";
+import {useForm, Controller} from 'react-hook-form'
 
 import BackgroundImg from '@assets/background.png'
+import LogoSvg from '@assets/logo.svg'
+
 import { Input } from "@components/Input";
 import { Button } from "@components/Button";
-import { useNavigation } from "@react-navigation/native";
+
+type formDataProps = {
+    name: string;
+    email: string;
+    password: string;
+    password_confirmation: string;
+}
 
 export function SignUp(){
+    const {control, handleSubmit} = useForm<formDataProps>() // typing and create hook-form
+
+    function handleSubmiteForm(data: formDataProps){
+        console.log(data)
+    
+    }
+
     const navigation = useNavigation()
 
     function handleGoBack(){
@@ -40,24 +53,70 @@ export function SignUp(){
                        Creat your account
                     </Heading>
 
-                    <Input
-                        placeholder="Name"
-                        autoCorrect={false}
+                    <Controller
+                        control={control}
+                        name="name"
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="Name"
+                                autoCorrect={false}
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
+                    /> 
+
+                    <Controller
+                        control={control}
+                        name="email"
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="E-mail"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                onChangeText={onChange}
+                                value={value}
+                                
+                            />
+                        )}
                     />
 
-                    <Input
-                        placeholder="E-mail"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                    <Controller
+                        control={control}
+                        name="password"
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="Password"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                value={value}
+                            />
+                        )}
                     />
 
-                    <Input
-                        placeholder="Password"
-                        secureTextEntry
+                    <Controller
+                        control={control}
+                        name="password_confirmation"                       
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="Confirm Password"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                value={value}
+                                onSubmitEditing={handleSubmit(handleSubmiteForm)} // para quando a pessoa apertar enter no teclado ele der o submite tambem
+                                returnKeyType="send" // to transformar o enter em send in the input( keyboard)
+                            />
+                        )}
                     />
 
-                    <Button variant={"solid"} title="Create and access" />
+                
+
+                    <Button 
+                        variant={"solid"} 
+                        title="Create and access"
+                        onPress={handleSubmit(handleSubmiteForm)} 
+                    />
                 </Center>
 
                 
