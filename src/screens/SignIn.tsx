@@ -9,7 +9,32 @@ import { Input } from "@components/Input";
 import { Button } from "@components/Button";
 import { useNavigation } from "@react-navigation/native";
 
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+import { Controller, useForm } from "react-hook-form";
+
+type formDataProps = {
+    email: string;
+    password: string;
+}
+
+const signInSchema = yup.object({
+    email: yup.string().required('Inform your email').email('Invalid email'),
+    password: yup.string().required('Inform your password').min(6, 'Password must be at least 6 characters'),
+})
+
+
 export function SignIn(){
+    const {control, handleSubmit, formState:{errors}} = useForm<formDataProps>({
+        resolver: yupResolver(signInSchema)
+    
+    }) // typing and create hook-form
+
+    function handleSubmiteForm(data: formDataProps){
+        console.log(data)
+    
+    }
+
     const navigation = useNavigation<AuthNavigatorRoutesProps>()
 
     function handleNewAccount(){
@@ -39,19 +64,39 @@ export function SignIn(){
                         Access your account
                     </Heading>
 
-                    <Input
-                        placeholder="E-mail"
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                        autoCorrect={false}
+                    <Controller 
+                        control={control}
+                        name="email"
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="E-mail"
+                                keyboardType="email-address"
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                onChangeText={onChange}
+                                value={value}
+                                errorMessage={errors.email?.message}
+                            />
+                        )}
                     />
 
-                    <Input
-                        placeholder="Password"
-                        secureTextEntry
+                    <Controller 
+                        control={control}
+                        name="password"
+                        render={({field: {onChange, value}}) => (
+                            <Input
+                                placeholder="Password"
+                                secureTextEntry
+                                onChangeText={onChange}
+                                onSubmitEditing={handleSubmit(handleSubmiteForm)} // para quando a pessoa apertar enter no teclado ele der o submite tambem
+                                value={value}
+                                errorMessage={errors.password?.message}
+                            />
+                        )}
                     />
 
-                    <Button variant={"solid"} title="Sign In" />
+
+                    <Button variant={"solid"} title="Sign In" onPress={handleSubmit(handleSubmiteForm)} />
                 </Center>
 
                 <Center mt={24}>
